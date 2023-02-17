@@ -1,18 +1,15 @@
-const fs = require('fs');
+const fs = require("fs");
 
 const mdLinks = (path, options) => {
   return new Promise((resolve, reject) => {
-    // identifica si la ruta existe
+    //Identifica si la ruta existe
     if (fs.existsSync(path)) {
-    // checar o convertir en ruta absoluta
-    // ¿la ruta absoluta es un archivo o un directorio?
-    // si es un directorio, filtrar archivos .md
+      // Si es un directorio filtrar los archivos md
     } else {
-      //si la ruta no existe, la promesa se rechaza
-        reject('Path does not exist')
+      reject('path does not exist');
     }
-  })
-}
+  });
+};
 
 module.exports = {
   mdLinks

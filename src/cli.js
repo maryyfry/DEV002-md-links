@@ -1,5 +1,5 @@
-const { mdLinks } = require('./index.js');
-mdLinks('/doesntexist/').then(() => { })
-    .catch((error) => {
-        console.log(error)
-    });
+const { mdLinks } = require('../src/index.js');
+mdLinks('/noexiste/').then(()=>{})
+.catch((error) => {
+    console.log(error)
+});
