@@ -6,7 +6,7 @@ const mdLinks = (path, options) => {
     if (fs.existsSync(path)) {
       // Si es un directorio filtrar los archivos md
     } else {
-      reject('path does not exist');
+      reject('Path does not exist');
     }
   });
 };

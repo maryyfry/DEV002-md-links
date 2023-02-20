@@ -1,30 +1,96 @@
-const path = require('path');
 const fs = require('fs');
+const path = require('path');
+const axios = require('axios');
 
-const validateLink = (link) => {
-  // Implementación de la validación de enlaces
-};
+// Verifies if route exists
+const isPathValid = (route) => fs.existsSync(route);
 
-const getLinks = (data, route) => {
-  // Implementación para obtener los enlaces de un archivo
-};
+// Verifies if path is absolute
+const isPathAbsolute = (absoluteRoute) => path.isAbsolute(absoluteRoute);
+
+// Converts relative route into absolute
+const convertToAbsolute = (route) => (isPathAbsolute(route) ? route : path.resolve(route));
+
+// Looks if the extension of the route is .md 
+const isExtensionMd = (route) => path.extname(route) === '.md';
 
 const getFiles = (route, extension) => {
   // Implementación para obtener los archivos de una extensión en una ruta
 };
 
-const isAbsolute = (route) => {
-  // Implementación para determinar si una ruta es absoluta o no
-};
+// Function to get the links
+const getLinks = (route) => new Promise((resolve, reject) => {
+  if (!isPathValid(route)) {
+    return reject(new Error('Path is invalid'));
+  }
 
-const convertToAbsolute = (route) => {
-  // Implementación para convertir una ruta relativa en una absoluta
-};
+  if (!isExtensionMd(route)) {
+    return reject(new Error('File does not have .md extension'));
+  }
+
+  const links = []; // it returns an array with the info the user wants to receive
+  readFiles(route)
+    .then((data) => {
+      const urlLinks = /\[(.+?)\]\((https?:\/\/[^\s]+)\)/g;
+      let match = urlLinks.exec(data);
+      while (match !== null) { // when a link is found, an object with these properties will be created
+        links.push({
+          href: match[2],
+          text: match[1],
+          file: route,
+        });
+        match = urlLinks.exec(data);  // objects found will be added to an array 
+      }
+      resolve(links);
+    })
+    .catch((error) => reject(error));
+});
+
+
+const getLinkStatus = (urls) => Promise.all(urls.map((link) => axios.get(link.href)
+  // utiliza la librería Axios para hacer una petición HTTP a cada una de las URLs que se le pasan como argumento
+  // axios.get devuelve una promesa que resuelve a un objeto con información de la respuesta HTTP, incluyendo el status code
+  .then((respuesta) => ({ ...link, status: respuesta.status, message: 'ok' })) // si es exitosa devuelve un objeto con estas propiedades
+  // console.log(respuesta);
+
+  .catch((error) => {
+    let errorStatus;
+    if (error.response) {
+      errorStatus = error.response.status;
+    } else if (error.request) {
+      errorStatus = 500;
+    } else {
+      errorStatus = 400;
+    }
+    // console.log('errorStatus', errorStatus);
+    return { ...link, status: errorStatus, message: 'fail' };
+  })));
+
+// Reads the file. This promise executes in cli.js
+const readFiles = (route) => new Promise((resolve, reject) => {
+  if (!isPathValid(route)) {
+    reject(new Error('Path is invalid'));
+  }
+  fs.readFile(route, 'utf-8', (error, data) => {
+    if (error) {
+      reject(error);
+    } else {
+      resolve(data);
+    }
+  });
+});
 
 module.exports = {
-  validateLink,
   getLinks,
   getFiles,
-  isAbsolute,
+  readFiles,
+  isPathValid,
+  isExtensionMd,
+  getLinkStatus,
+  isPathAbsolute,
   convertToAbsolute,
 };
+
+
+
+
