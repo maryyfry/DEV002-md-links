@@ -11,16 +11,7 @@ const mdLinks = (path, options) => {
       //Si no existe la ruta se rechaza la promesa
       reject("La ruta no existe");
     }
-    // if (!pathAbsolute(filePath)) {
-    // pathAbsolute(filePath);
-    filePath = pathAbsolute(filePath);
-    console.log(`${filePath} convertir a absoluta`);
-    if (!fileExt(filePath)) {
-      console.log('archivo md');
-      return reject(`${filePath} La ruta no contiene un archivo md`);
-    }
-    console.log('fin de recorrido');
-    return resolve([]);
+ 
   });
 };
 
