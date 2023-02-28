@@ -1,9 +1,20 @@
-const fs = require('fs');
+const fs = require('fs'); // file system
+// const path = require('path');
 
-const texto = fs.readFileSync("./pruebas/haiku.txt", "utf-8");
-console.log(texto);
+// const pathTexto = path.join(__dirname, "./haiku.txt");
 
 
+// const texto = fs.readFileSync(pathTexto, "utf-8");
+// console.log(texto);
+
+// Leer archivos 
+fs.readFile('./pruebas/prueba 2/prueba 3/sureThing.txt', 'utf-8', (error,data) => {
+  if (!error) {
+    console.log(data);
+  } else {
+    console.log('Error: ${error}');
+  }
+  });
 
 
 
