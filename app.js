@@ -1,5 +1,5 @@
 const fs = require('fs'); // file system
-// const path = require('path');
+const path = require('path');
 
 // const pathTexto = path.join(__dirname, "./haiku.txt");
 
@@ -7,18 +7,28 @@ const fs = require('fs'); // file system
 // const texto = fs.readFileSync(pathTexto, "utf-8");
 // console.log(texto);
 
-// Leer archivos 
+// Leer archivos con ruta fija
 fs.readFile('./pruebas/prueba 2/prueba 3/sureThing.txt', 'utf-8', (error,data) => {
   if (!error) {
-    console.log(data);
+    // console.log(data);
   } else {
-    console.log('Error: ${error}');
+    // console.log('Error: ${error}');
   }
   });
 
+  // Averiguar extension de un archivo
+  const extension = path.extname('resumen.md');
+  // console.log(extension)
 
+//Obtén el contenido de un directorio
+// console.log("Inicializando lectura");
+const readDirectory = fs.readdirSync('./pruebas/prueba 2');
+// console.log("Finalizando lectura");
+// console.log(readDirectory);
 
-
+//Une dos rutas
+const joinRoutes = path.join('prueba2','prueba 3','sureThing.txt')
+console.log(joinRoutes);
 
 
 

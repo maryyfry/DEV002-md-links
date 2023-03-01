@@ -1,9 +1,12 @@
 const fs = require("fs");
+const path = require("path");
+
 
 const mdLinks = (path, options) => {
   return new Promise((resolve, reject) => {
     //Identifica si la ruta existe
     if (fs.existsSync(path)) {
+      const pathAbsolute = getAbsoluteRoute(path)
       //Chequear o convertir a una ruta absoluta
       // Probar si esa ruta absoluta es un archivo o un directorio
       // Si es un directorio filtrar los archivos md
