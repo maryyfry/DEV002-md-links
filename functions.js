@@ -1,23 +1,35 @@
 const fs = require('fs');
 const path = require('path');
+const axios = require('axios');
 
-// determina si la ruta existe
-const pathExist = (route) => fs.existsSync(route)
+// Identificar si existe la ruta
+const pathExist = (route) => fs.existsSync(route);
 
-// determina si es una ruta absoluta 
-const pathAbsolute = (absoluteRoute) => path.isAbsolute(absoluteRoute)
+// Identificar si la ruta es absoluta
+const toAbsolute = (route) => {
+    if (!path.isAbsolute(route)) {
+        return path.resolve(route)
+    } else {
+        return route
+    }
+};
 
-// Para obtener la ruta absoluta si es relativa
-const getAbsolute = (route) => (pathAbsolute(route) ? routePath : path.resolve(route))
+// Es un archivo md?
+const mdFile = (absolutePath) => {
+    if (path.extname(absolutePath) === '.md') {
+        return true
+    } else {
+        return false
+    }
+}
 
-// Averiguar si es un archivo
-const pathIsFile = (route) => fs.statSync(route).isFile();
-
-// Saber si es un archivo .md
-const isMdFile = (route) => (path.extname(route) === '.md');
-
-// Saber si es un directorio
-const isADirectory = (route) => fs.statSync(route).isDirectory()
-
-// Leer un directorio
-const readDirectory = (route) => fs.readdirSync(route)
+// Leer archivo
+const readFile = (mdFile) => new Promise((resolve, reject) => {
+    fs.readFile(mdFile, 'utf-8', (error, file) => {
+        if (error) {
+            reject(error);
+        } else {
+            resolve(file);
+        }
+    });
+});

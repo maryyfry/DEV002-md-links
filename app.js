@@ -1,12 +1,6 @@
 const fs = require('fs'); // file system
 const path = require('path');
 
-// const pathTexto = path.join(__dirname, "./haiku.txt");
-
-
-// const texto = fs.readFileSync(pathTexto, "utf-8");
-// console.log(texto);
-
 // Leer archivos con ruta fija
 fs.readFile('./pruebas/prueba 2/prueba 3/sureThing.txt', 'utf-8', (error,data) => {
   if (!error) {
