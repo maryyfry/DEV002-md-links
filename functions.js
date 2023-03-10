@@ -68,3 +68,13 @@ const validateLinks = (arrayLinks) => Promise.all(arrayLinks.map((link) => axios
             return { ...link, status: 'ERROR: ' + error.message, ok: 'Fail' };
         }
     })));
+
+// Links únicos y rotos
+    const getStats = (links) => {
+        const total = links.length;
+        const uniqueLinks = new Set(links.map((link) => link.href)).size;
+        return {
+            Total: total,
+            Unique: uniqueLinks,
+        };
+    };   
