@@ -89,3 +89,14 @@ const validateLinks = (arrayLinks) => Promise.all(arrayLinks.map((link) => axios
             Broken: brokenLinks,
         };
     };   
+
+    module.exports = {
+        pathExist,
+        toAbsolute,
+        mdFile,
+        readFile,
+        getLinks,
+        validateLinks,
+        getStats,
+        getStatsAndValidate,
+    }
