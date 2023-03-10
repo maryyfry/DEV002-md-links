@@ -55,3 +55,16 @@ const getLinks = (mdFile) => new Promise((resolve, reject) => {
             reject(error);
         })
 });
+
+// Validar links
+const validateLinks = (arrayLinks) => Promise.all(arrayLinks.map((link) => axios.get(link.href) 
+    .then((response) => {
+        return { ...link, status: response.status, ok: response.statusText };
+    })
+    .catch((error) => {
+        if (error.response) {
+            return { ...link, status: error.response.status, ok: 'Fail' };
+        } else {
+            return { ...link, status: 'ERROR: ' + error.message, ok: 'Fail' };
+        }
+    })));
