@@ -78,3 +78,14 @@ const validateLinks = (arrayLinks) => Promise.all(arrayLinks.map((link) => axios
             Unique: uniqueLinks,
         };
     };   
+
+    const getStatsAndValidate = (links) => {
+        const total = links.length;
+        const uniqueLinks = new Set(links.map((link) => link.href)).size;
+        const brokenLinks = links.filter((link) => link.ok === 'Fail').length;
+        return {
+            Total: total,
+            Unique: uniqueLinks,
+            Broken: brokenLinks,
+        };
+    };   
