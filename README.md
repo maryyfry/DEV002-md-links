@@ -7,9 +7,7 @@ Markdown links es una biblioteca para examinar archivos tipo markdown, a través
 
 ## 1. Diagrama de flujo
 
-
-
-
+[![Copy-of-mdlinks-drawio.png](https://i.postimg.cc/4y74QW5J/Copy-of-mdlinks-drawio.png)](https://postimg.cc/4HGTJbqM)
 
 ### 2. Resumen
 
