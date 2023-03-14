@@ -2,7 +2,7 @@ const {
   pathExist,
   toAbsolute,
   mdFile,
-  validateLinks,
+  getLinkStatus,
   getLinks,
 } = require('./functions')
 
@@ -26,7 +26,7 @@ const mdLinks = (path, options) => {
               resolve(arrayLinks)
             } else {
               // funcion para validar links
-              validateLinks(arrayLinks).then((result) => {
+              getLinkStatus(arrayLinks).then((result) => {
                 resolve(result)
               })   
             }
